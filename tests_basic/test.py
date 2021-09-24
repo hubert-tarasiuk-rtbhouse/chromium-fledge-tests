@@ -7,10 +7,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
-from common.utils import print_debug
-from common.utils import log_exception
-from common.mockserver import MockServer
 from common.base_test import BaseTest
+from common.mockserver import MockServer
+from common.utils import log_exception
+from common.utils import print_debug
 
 logger = logging.getLogger(__file__)
 
@@ -24,10 +24,9 @@ class BasicTest(BaseTest):
     @print_debug
     @log_exception
     def test__should_report_win(self):
-        with MockServer(8081, '/home/usertd/tests/tests_basic/resources/buyer') as buyer_server,\
-                MockServer(8082, '/home/usertd/tests/tests_basic/resources/publisher') as publisher_server,\
-                MockServer(8083, '/home/usertd/tests/tests_basic/resources/seller') as seller_server:
-
+        with MockServer(8081, 'resources/buyer') as buyer_server, \
+                MockServer(8082, 'resources/publisher') as publisher_server, \
+                MockServer(8083, 'resources/seller') as seller_server:
             self.driver.get(buyer_server.address)
             self.assertDriverContainsText('h1', 'Hello')
             self.driver.get(publisher_server.address)
